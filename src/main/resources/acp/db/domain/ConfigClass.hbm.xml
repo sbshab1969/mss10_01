@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="acp.db.domain">
+    <class name="ConfigClass" table="mss_options">
+        <id name="id" type="long" column="msso_id">
+            <generator class="sequence">
+               <param name="sequence_name">msso_seq</param>
+            </generator>
+        </id>
+        <property name="name" type="string" column="msso_name"/>
+        
+        <property name="configR" type="string" column="msso_config.getStringVal()" 
+                       insert="false" update="false"/>  
+        <property name="configW" type="string" column="msso_config"/>  
+        
+        <property name="dateBegin" type="timestamp" column="msso_dt_begin"/>
+        <property name="dateEnd" type="timestamp" column="msso_dt_end"/>
+        <property name="comment" type="string" column="msso_comment"/>
+        <property name="dateCreate" type="timestamp" column="msso_dt_create"/>
+        <property name="dateModify" type="timestamp" column="msso_dt_modify"/>
+        <property name="owner" type="string" column="msso_owner"/>
+        <property name="sourceId" type="long" column="msso_msss_id"/>
+
+        <many-to-one name="source" column="msso_msss_id"
+                     insert="false" update="false"/> 
+
+         <!-- lazy="false"-->
+<!--     
+        <many-to-one name="source" column="msso_msss_id"
+         class="SourceClass" lazy="false"  lazy="proxy" fetch="join"
+         not-found="ignore" cascade="none" insert="false" update="false"/> 
+-->
+
+
+<!-- OK
+        <sql-insert>
+insert into mss_options (msso_name, msso_config, msso_dt_begin, msso_dt_end, msso_comment
+, msso_dt_create, msso_dt_modify, msso_owner, msso_msss_id, msso_id)
+values (?, XMLType(?), ?, ?, ?, ?, ?, ?, ?, ?)
+        </sql-insert>
+
+        <sql-update>
+update mss_options set
+        msso_name=?,
+        msso_config=XMLType(?),
+        msso_dt_begin=?,
+        msso_dt_end=?,
+        msso_comment=?,
+        msso_dt_create=?,
+        msso_dt_modify=?,
+        msso_owner=?,
+        msso_msss_id=? 
+   where msso_id=?
+        </sql-update>
+-->
+
+    </class>
+</hibernate-mapping>
